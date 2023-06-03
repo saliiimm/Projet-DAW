@@ -4,12 +4,12 @@
     </header>
     <nav>
         <ul>
-            <li>Nom : Toto</li>
-            <li>Prénom : Tutu</li>
-            <li>Spécialité : TI</li>
+            <li>Nom :Ghalem & Belaiboud</li>
+            <li>Prénom : Salim & Ramzy</li>
+            <li>Spécialité : Informatique</li>
             <li>Section : 1</li>
-            <li>Groupe : 2</li>
-            <li>Mail : t.toto@mail.dz</li>
+            <li>Groupe : 4 & 6</li>
+            <li>Mail : salimghalem40@gmail.com <br>r.belaiboud.fs@univ-boumerdes.dz </li>
         </ul>
-        <a href="formulaire.html">Ajouter Ville</a>
+        <a href="ajout.php">Ajouter Ville</a>
     </nav>
