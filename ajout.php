@@ -3,7 +3,7 @@
 //include('/config/bd_connect.php');
 
 //on se connecte à notre base de donnée en insérant le host,le nom d'utilisateur le mot de passe ainsi que le nom de notre databse dans cet ordre
-$conn = mysqli_connect('localhost','Salim&Ramzy','1234','projet_daw');
+$conn = mysqli_connect('localhost','Salim&Ramzy','1234','voyage');
 
 //Par la suite on verifie si l'on s'est bien connecté à la DB:
 if(!$conn){
@@ -166,7 +166,25 @@ $photo = mysqli_real_escape_string($conn,$_POST['photo']);
 
 
 
-$sql1 = "INSERT INTO pays (nompay, idcon) SELECT '$pays', idcon FROM continent WHERE nomcon = '$continent'";
+
+// Vérification de l'existence du pays
+$sql1 = "SELECT idpay FROM pays WHERE nompay = '$pays' AND idcon = (SELECT idcon FROM continent WHERE nomcon = '$continent')";
+$result = mysqli_query($conn, $sql1);
+
+if (mysqli_num_rows($result) > 0) {
+  // Le pays existe déjà, récupérer l'ID
+  $row = mysqli_fetch_assoc($result);
+  $idpay = $row['idpay'];
+} else {
+  // Le pays n'existe pas, l'insérer dans la base de données
+  $sql1 = "INSERT INTO pays (nompay, idcon) VALUES ('$pays', (SELECT idcon FROM continent WHERE nomcon = '$continent'))";
+  mysqli_query($conn, $sql1);
+  $idpay = mysqli_insert_id($conn);
+}
+
+
+
+
 $sql2 = "INSERT INTO ville (nomvil, descvil, idpay) SELECT '$ville', '$description', pays.idpay FROM pays JOIN continent ON pays.idcon = continent.idcon WHERE pays.nompay = '$pays' AND continent.nomcon = '$continent'";
 $sql3 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'gare', '$gare', ville.idvil FROM ville JOIN pays ON pays.idpay = ville.idpay JOIN continent ON pays.idcon = continent.idcon WHERE ville.nomvil = '$ville' AND pays.nompay = '$pays' AND continent.nomcon = '$continent'";
 $sql4 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'hotel', '$hotel', ville.idvil FROM ville JOIN pays ON pays.idpay = ville.idpay JOIN continent ON pays.idcon = continent.idcon WHERE ville.nomvil = '$ville' AND pays.nompay = '$pays' AND continent.nomcon = '$continent'";
@@ -178,7 +196,7 @@ $sql6 = "INSERT INTO site (nomsit, cheminphoto, idvil) SELECT '$nomsit', '$photo
 //sauvegarder dans la bdd et verifier:
 if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($conn, $sql3) && mysqli_query($conn, $sql4) && mysqli_query($conn, $sql5) && mysqli_query($conn, $sql6)){
  //   echo "données enregistrées!";
- header('location: recherche.php');/*si pas d'erreurs après submit aller vers autre page*/
+ header('location: home.php');/*si pas d'erreurs après submit aller vers autre page*/
 }else {
      echo 'query error:' . mysqli_error($conn);
 }

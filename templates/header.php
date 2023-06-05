@@ -4,12 +4,12 @@
     </header>
     <nav>
         <ul>
-            <li>Nom :Ghalem & Belaiboud</li>
-            <li>Prénom : Salim & Ramzy</li>
+            <li>Nom :Belaiboud</li>
+            <li>Prénom : Ramzy</li>
             <li>Spécialité : Informatique</li>
             <li>Section : 1</li>
-            <li>Groupe : 4 & 6</li>
-            <li>Mail : salimghalem40@gmail.com <br>r.belaiboud.fs@univ-boumerdes.dz </li>
+            <li>Groupe : 6</li>
+            <li>Mail :<br>r.belaiboud.fs@univ-boumerdes.dz </li>
         </ul>
-        <a href="ajout.php">Ajouter Ville</a>
+        <a href="../projet-daw/ajout.php">Ajouter Ville</a>
     </nav>
