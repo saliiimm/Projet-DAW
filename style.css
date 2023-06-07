@@ -1,0 +1,248 @@
+/* Style général */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  text-decoration: none;
+  list-style-type: none;
+}
+button,
+input[type="button"] {
+  cursor: pointer;
+}
+/* Style header */
+header {
+  position: absolute;
+  top: 0;
+  left: 250px;
+  height: 310px;
+  width: calc(100vw - 250px);
+  background-image: url(./assets/paysage-monatgne.jpg);
+  background-size: cover; /* Redimensionner l'image pour couvrir tout l'élément */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+header h1 {
+  position: absolute;
+  top: 5px;
+  font-size: 75px;
+}
+/* Stylebarre de navigation */
+nav {
+  background-color: #181f54;
+  color: #fff;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  font-size: 12px;
+}
+/*style titre Etudiant*/
+nav h2 {
+  font-size: 25px;
+  margin-bottom: 5px;
+  margin-top: 55px;
+}
+/*style barres*/
+nav hr {
+  width: 79%;
+  margin-bottom: 35px;
+}
+/*style boutons 1 et 2*/
+.boutons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+.boutons input {
+  width: 35px;
+  height: 35px;
+  background-color: white;
+  color: #181f54;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: bold;
+}
+.etudiant-infos {
+  margin-bottom: 30px;
+  position: relative;
+}
+.valise {
+  position: absolute;
+  right: -240px;
+  bottom: -195px;
+  width: 260px;
+  z-index: 2;
+}
+.info-bloc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.groupe-pere {
+  position: relative;
+  margin-bottom: 31px;
+}
+.groupe {
+  position: absolute;
+  right: 0;
+}
+.btn-ville {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 165px;
+  height: 44px;
+  border-radius: 22px;
+  background-color: white;
+  color: #181f54;
+  font-size: larger;
+  font-weight: bold;
+  text-decoration: none;
+}
+/*partie home recherche*/
+.partie-home,
+.ville-info {
+  margin-left: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  color: #181f54;
+}
+.recherche-bloc,
+.recherche-bloc form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.recherche-bloc {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+  border: solid 1px grey;
+  width: 950px;
+  position: absolute;
+  top: -65px;
+  height: 300px;
+}
+.partie-home h2 {
+  font-size: 33px;
+}
+.recherche-bloc form {
+  height: 250px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.part {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: fit-content;
+  width: 100%;
+}
+
+.part div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 4px;
+}
+.recherche-bloc input {
+  border: 2px solid #181f54;
+  border-radius: 5px;
+  width: 190px;
+  height: 30px;
+}
+.recherche-bloc button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 142px;
+  height: 39px;
+  border-radius: 22px;
+  background-color: #181f54;
+  color: white;
+  border: none;
+  font-size: larger;
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: 15px;
+}
+/*resultats de la recherche*/
+.resultat {
+  margin-top: 240px;
+  width: 100%;
+  height: 350px;
+}
+.affichage {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/*ville resultat*/
+.affichage-ville {
+  width: 950px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ville {
+  margin: 15px;
+}
+.ville,
+.ecriture,
+.icones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ecriture {
+  flex-direction: column;
+}
+.ecriture h3,
+.ecriture h5 {
+  margin: 0;
+}
+.ecriture hr {
+  width: 100%;
+  background-color: #181f54;
+  margin: 3px;
+}
+.icones img {
+  width: 20px;
+  margin: 0 4px 0 4px;
+  cursor: pointer;
+}
+.icones {
+  margin-left: 3px;
+}
+
+/* Style section */
+.ajout-ville {
+  left: 250px;
+}

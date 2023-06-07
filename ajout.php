@@ -216,53 +216,57 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ajouter une ville</title>
-    <link rel="stylesheet" href="css&js/style.css" />
+    <link rel="stylesheet" href="style.css" />
 </head>
-<!---on fait appel a header.php pour faire afficher le header--->
-<?php include('./templates/header.php'); ?>
-<section class="ajout-ville">
-    <h1>Ajouter une ville</h1>
-    <form method="POST" action="ajout.php">
+
+<body>
+    <!---on fait appel a header.php pour faire afficher le header--->
+    <?php include('./templates/header.php'); ?>
+    <section class="ajout-ville">
+        <h1>Ajouter une ville</h1>
+        <form method="POST" action="ajout.php">
 
 
-        <label for="ville">Ville :</label>
-        <input type="text" name="ville" value="<?php echo htmlspecialchars($ville) ?>" required>
-        <!---afficher valeur insérée avant si elle existe--->
-        <br>
-        <div class=""><?php echo $errors['ville'] ?></div>
-        <!---afficher erreur si elle existe--->
+            <label for="ville">Ville :</label>
+            <input type="text" name="ville" value="<?php echo htmlspecialchars($ville) ?>" required>
+            <!---afficher valeur insérée avant si elle existe--->
+            <br>
+            <div class=""><?php echo $errors['ville'] ?></div>
+            <!---afficher erreur si elle existe--->
 
 
-        <label for="description">Description :</label>
-        <input type="text" name="description" value="<?php echo htmlspecialchars($description) ?>" required>
-        <!---afficher valeur insérée avant si elle existe--->
-        <br>
-        <div class=""><?php echo $errors['description'] ?></div>
+            <label for="description">Description :</label>
+            <input type="text" name="description" value="<?php echo htmlspecialchars($description) ?>" required>
+            <!---afficher valeur insérée avant si elle existe--->
+            <br>
+            <div class=""><?php echo $errors['description'] ?></div>
 
 
-        <label for="continent">Continent :</label>
-        <select id="continent" name="continent" required>
-            <option value="<?php echo htmlspecialchars($continent) ?>">Sélectionnez un continent</option>
-            <!-- Code PHP pour charger les continents -->
-            <?php
+            <label for="continent">Continent :</label>
+            <select id="continent" name="continent" required>
+                <option value="<?php echo htmlspecialchars($continent) ?>">Sélectionnez un continent</option>
+                <!-- Code PHP pour charger les continents -->
+                <?php
         $continents = array("Europe", "Amérique", "Asie", "Afrique", "Océanie");
         foreach ($continents as $continent) {
           echo "<option value=\"$continent\">$continent</option>";
         }
       ?>
-        </select>
-        <button type="button" id="nouveauContinentBtn">Nouveau</button>
-        <br>
-        <div class=""><?php echo $errors['continent'] ?></div>
+            </select>
+            <button type="button" id="nouveauContinentBtn">Nouveau</button>
+            <br>
+            <div class=""><?php echo $errors['continent'] ?></div>
 
 
 
-        <label for="pays">Pays :</label>
-        <select id="pays" name="pays" value="<?php echo htmlspecialchars($pays) ?>" required>
-            <option value="">Sélectionnez un pays</option>
-            <!-- Code PHP pour charger les pays -->
-            <?php
+            <label for="pays">Pays :</label>
+            <select id="pays" name="pays" value="<?php echo htmlspecialchars($pays) ?>" required>
+                <option value="">Sélectionnez un pays</option>
+                <!-- Code PHP pour charger les pays -->
+                <?php
     // Connectez-vous à votre base de données ici
 
     // Exécutez la requête pour récupérer les pays
@@ -278,64 +282,64 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
     // Fermez la connexion à la base de données ici
 
     ?>
-            <button type="button" id="nouveauPaysBtn">Nouveau</button>
-            <br>
-            <div class=""><?php echo $errors['pays'] ?></div>
+                <button type="button" id="nouveauPaysBtn">Nouveau</button>
+                <br>
+                <div class=""><?php echo $errors['pays'] ?></div>
 
 
 
-            <h2>Hôtels :</h2>
-            <input type="text" id="hotel" name="hotel" placeholder="Nom de l'hôtel"
-                value="<?php echo htmlspecialchars($hotel) ?>">
-            <button type="button" onclick="ajouterElement('hotel')">Ajouter</button>
-            <br>
-            <select id="listeHotels" multiple></select>
-            <div class=""><?php echo $errors['hotel'] ?></div>
+                <h2>Hôtels :</h2>
+                <input type="text" id="hotel" name="hotel" placeholder="Nom de l'hôtel"
+                    value="<?php echo htmlspecialchars($hotel) ?>">
+                <button type="button" onclick="ajouterElement('hotel')">Ajouter</button>
+                <br>
+                <select id="listeHotels" multiple></select>
+                <div class=""><?php echo $errors['hotel'] ?></div>
 
 
 
-            <h2>Gares :</h2>
-            <input type="text" id="gare" name="gare" placeholder="Nom de la gare"
-                value="<?php echo htmlspecialchars($gare) ?>">
-            <button type="button" onclick="ajouterElement('gare')">Ajouter</button>
-            <br>
-            <select id="listeGares" multiple></select>
-            <div class=""><?php echo $errors['gare'] ?></div>
+                <h2>Gares :</h2>
+                <input type="text" id="gare" name="gare" placeholder="Nom de la gare"
+                    value="<?php echo htmlspecialchars($gare) ?>">
+                <button type="button" onclick="ajouterElement('gare')">Ajouter</button>
+                <br>
+                <select id="listeGares" multiple></select>
+                <div class=""><?php echo $errors['gare'] ?></div>
 
 
 
 
-            <h2>Aéroports :</h2>
-            <input type="text" id="aeroport" name="aeroport" placeholder="Nom de l'aéroport"
-                value="<?php echo htmlspecialchars($aeroport) ?>">
-            <button type="button" onclick="ajouterElement('aeroport')">Ajouter</button>
-            <br>
-            <select id="listeAeroports" multiple></select>
-            <div class=""><?php echo $errors['gare'] ?></div>
+                <h2>Aéroports :</h2>
+                <input type="text" id="aeroport" name="aeroport" placeholder="Nom de l'aéroport"
+                    value="<?php echo htmlspecialchars($aeroport) ?>">
+                <button type="button" onclick="ajouterElement('aeroport')">Ajouter</button>
+                <br>
+                <select id="listeAeroports" multiple></select>
+                <div class=""><?php echo $errors['gare'] ?></div>
 
 
 
-            <label for="nomsit">Site Touristique:</label>
-            <input type="text" name="nomsit" value="<?php echo htmlspecialchars($nomsit) ?>" required>
-            <!---afficher valeur insérée avant si elle existe--->
-            <br>
-            <div class=""><?php echo $errors['nomsit'] ?></div>
+                <label for="nomsit">Site Touristique:</label>
+                <input type="text" name="nomsit" value="<?php echo htmlspecialchars($nomsit) ?>" required>
+                <!---afficher valeur insérée avant si elle existe--->
+                <br>
+                <div class=""><?php echo $errors['nomsit'] ?></div>
 
 
 
-            <h2>Photos :</h2>
-            <input type="text" id="photo" name="photo" placeholder="Chemin de la photo"
-                value="<?php echo htmlspecialchars($photo) ?>">
-            <button type="button" onclick="ajouterElement('photo')">Ajouter</button>
-            <br>
-            <select id="listePhotos" multiple></select>
-            <div class=""><?php echo $errors['photo'] ?></div>
-            <br><br>
-            <button type="submit" value="submit" name=submit>Ajouter</button>
+                <h2>Photos :</h2>
+                <input type="text" id="photo" name="photo" placeholder="Chemin de la photo"
+                    value="<?php echo htmlspecialchars($photo) ?>">
+                <button type="button" onclick="ajouterElement('photo')">Ajouter</button>
+                <br>
+                <select id="listePhotos" multiple></select>
+                <div class=""><?php echo $errors['photo'] ?></div>
+                <br><br>
+                <button type="submit" value="submit" name=submit>Ajouter</button>
 
-    </form>
-</section>
-<script src="./css_&_js/index.js"></script>
+        </form>
+    </section>
+    <script src="./css_&_js/index.js"></script>
 </body>
 
 </html>
