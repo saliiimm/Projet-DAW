@@ -5,13 +5,16 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  text-decoration: none;
   list-style-type: none;
 }
 button,
 input[type="button"] {
   cursor: pointer;
 }
+a {
+  text-decoration: none;
+}
+
 /* Style header */
 header {
   position: absolute;
@@ -78,12 +81,12 @@ nav hr {
 }
 .etudiant-infos {
   margin-bottom: 30px;
-  position: relative;
 }
-.valise {
-  position: absolute;
-  right: -240px;
-  bottom: -195px;
+.valise,
+.carte {
+  position: fixed;
+  left: 210px;
+  top: 480px;
   width: 260px;
   z-index: 2;
 }
@@ -150,7 +153,7 @@ nav hr {
   width: 100%;
   margin-bottom: 15px;
 }
-.part {
+.part,.ajout {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -228,6 +231,13 @@ nav hr {
 .ecriture h5 {
   margin: 0;
 }
+.ecriture a {
+  color: #181f54;
+}
+.ecriture a:hover {
+  color: white;
+  text-shadow: 0 0 4px #181f54;
+}
 .ecriture hr {
   width: 100%;
   background-color: #181f54;
@@ -242,7 +252,14 @@ nav hr {
   margin-left: 3px;
 }
 
-/* Style section */
+/* Style ajout.php */
 .ajout-ville {
-  left: 250px;
+  margin-left: 280px;
 }
+.ajout-ville input {
+  width: 185px;
+  height: 27px;
+  border: 2px solid #181f54;
+  border-radius: 11px;
+}
+

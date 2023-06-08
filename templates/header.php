@@ -26,6 +26,4 @@
         </h3>
         <hr>
         <a href="../projet-daw/ajout.php" class="btn-ville">Ajouter une Ville</a>
-
-        <img src="./assets/valise.png" alt="valise-de-voyage" class="valise">
 </nav>

@@ -27,20 +27,21 @@ $sql = "SELECT ville.idvil, ville.nomvil, pays.nompay FROM ville
     // Ajouter les conditions de recherche en fonction des champs remplis
     if (!empty($continent)) {
         $sql .= " INNER JOIN continent ON pays.idcon = continent.idcon
-                  WHERE continent.nomcon = '$continent'";
+                  WHERE continent.nomcon like '%$continent%'";
     }
 
     if (!empty($pays)) {
-        $sql .= " AND pays.nompay = '$pays'";
+        $sql .= " AND pays.nompay like '%$pays%'";
     }
 
 
      if (!empty($ville)) {
-        $sql .= " AND ville.nomvil = '$ville'";
+        $sql .= " AND ville.nomvil like '%$ville%'";
     }
 
     if (!empty($site)) {
-        $sql .= " AND site.nomsit = '$site'";
+       $sql .= " INNER JOIN site ON ville.idvil = site.idvil
+              WHERE site.nomsit LIKE '%$site%'";
     }
 
     // Exécuter la requête SQL
@@ -151,7 +152,7 @@ mysqli_close($conn);
         </div>
     </section>
 
-
+    <img src="./assets/valise.png" alt="valise-de-voyage" class="valise">
     <script src="./cssjs/index.js"></script>
 </body>
 
