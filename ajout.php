@@ -14,12 +14,75 @@ if(!$conn){
 
 
 //on initialise nos vars dabs lesquels on recupere les données de l'utilisateur:
-$ville = $description = $continent = $pays = $hotel = $gare = $aeroport = $nomsit = $photo = '';
+$ville = $description = $continent = $pays = $hotel = $gare = $aeroport = $resto = $nomsit = $photo = '';
 
 
 
 //on fait un tableau dans lequel on stocke les erreurs si existantes:
-$errors = array('ville' => '','description' => '','continent' => '','pays' => '','hotel' => '','gare' => '','aeroport' => '','nomsit' => '','photo' => '');
+$errors = array('ville' => '','description' => '','continent' => '','pays' => '','hotel' => '','gare' => '','resto' => '','aeroport' => '','nomsit' => '','photo' => '');
+
+
+
+//ajout nouveau pays:
+
+
+$nompays = $nomcontinent = '';
+$errorss = array(
+    'nompays' => '',
+    'nomcontinent' => '',
+);
+
+if (isset($_POST['submitpays'])) {
+    if (empty($_POST['nompays'])) {
+        $errorss['nompays'] = "Entrez un nom de pays <br/>";
+    } else {
+        $nompays = $_POST['nompays'];
+    }
+
+    if (empty($_POST['nomcontinent'])) {
+        $errorss['nomcontinent'] = "Entrez un nom de continent <br/>";
+    } else {
+        $nomcontinent = $_POST['nomcontinent'];
+    }
+
+    if (!array_filter($errorss)) {
+        $nompays = mysqli_real_escape_string($conn, $_POST['nompays']);
+        $nomcontinent = mysqli_real_escape_string($conn, $_POST['nomcontinent']);
+
+        $idconn = "SELECT idcon FROM continent WHERE nomcon = '$nomcontinent';";
+
+        $result = mysqli_query($conn, $idconn);
+        if ($result) {
+            $voyage = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            $a = $voyage[0]['idcon'];
+
+            // Insérer les données dans la table pays
+            $insertQuery = "INSERT INTO pays (nompay, idcon) VALUES ('$nompays', '$a');";
+            $insertResult = mysqli_query($conn, $insertQuery);
+            if ($insertResult) {
+                // Redirection vers la page souhaitée après l'insertion réussie
+                header('Location: ajout.php');
+                exit;
+            } else {
+                echo "Erreur lors de l'insertion des données : " . mysqli_error($conn);
+            }
+        } else {
+            echo "Erreur lors de la récupération de l'ID du continent : " . mysqli_error($conn);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -27,10 +90,6 @@ $errors = array('ville' => '','description' => '','continent' => '','pays' => ''
 
 if(isset($_POST['submit'])){
     
-$gareList = $_POST['gareList'];
-$hotelList = $_POST['hotelList'];
-$aeroportList = $_POST['aeroportList'];
-
 //On verifie la ville:
     if(empty($_POST['ville'])){
   
@@ -85,11 +144,11 @@ $aeroportList = $_POST['aeroportList'];
 
 
     //On verifie l'hotel:
-    if(empty($_POST['hotel'])){
+    if(empty($_POST['hotelname'])){
   
         $errors['hotel']="Veuillez insérer un hotel! ";
     } else {
-        $hotel = htmlspecialchars($_POST['hotel']);
+        $hotel = htmlspecialchars($_POST['hotelname']);
         if(!preg_match('/^[a-zA-Z\s.,\'-]+$/', $hotel)){
             $errors['hotel']="Veuillez insérer ou choisir un hotel valide! ";
         }
@@ -98,11 +157,11 @@ $aeroportList = $_POST['aeroportList'];
 
 
     //On verifie la gare:
-    if(empty($_POST['gare'])){
+    if(empty($_POST['garename'])){
   
         $errors['gare']="Veuillez insérer une gare! ";
     } else {
-        $gare = htmlspecialchars($_POST['gare']);
+        $gare = htmlspecialchars($_POST['garename']);
         if(!preg_match('/^[a-zA-Z\s.,\'-]+$/', $gare)){
             $errors['gare']="Veuillez insérer ou choisir une gare valide! ";
         }
@@ -110,12 +169,24 @@ $aeroportList = $_POST['aeroportList'];
 
 
 
-    //On verifie l'aeroport:
-    if(empty($_POST['aeroport'])){
+   //On verifie le resto:
+    if(empty($_POST['restoname'])){
   
-        $errors['aeroport']="Veuillez insérer une gare! ";
+        $errors['restoname']="Veuillez insérer un restaurant! ";
     } else {
-        $aeroport = htmlspecialchars($_POST['aeroport']);
+        $resto = htmlspecialchars($_POST['restoname']);
+        if(!preg_match('/^[a-zA-Z\s.,\'-]+$/', $resto)){
+            $errors['resto']="Veuillez insérer ou choisir un restaurant valide! ";
+        }
+    }
+
+
+    //On verifie l'aeroport:
+    if(empty($_POST['aeroportname'])){
+  
+        $errors['aeroport']="Veuillez insérer un aeroport! ";
+    } else {
+        $aeroport = htmlspecialchars($_POST['aeroportname']);
         if(!preg_match('/^[a-zA-Z\s.,\'-]+$/', $aeroport)){
             $errors['aeroport']="Veuillez insérer ou choisir un aeroport valide! ";
         }
@@ -158,9 +229,10 @@ $ville = mysqli_real_escape_string($conn,$_POST['ville']);
 $description = mysqli_real_escape_string($conn,$_POST['description']);
 $continent = mysqli_real_escape_string($conn,$_POST['continent']);
 $pays = mysqli_real_escape_string($conn,$_POST['pays']);
-$gare = mysqli_real_escape_string($conn,$_POST['gare']);
-$hotel = mysqli_real_escape_string($conn,$_POST['hotel']);
-$aeroport = mysqli_real_escape_string($conn,$_POST['aeroport']);
+$gare = mysqli_real_escape_string($conn,$_POST['garename']);
+$hotel = mysqli_real_escape_string($conn,$_POST['hotelname']);
+$resto = mysqli_real_escape_string($conn,$_POST['restoname']);
+$aeroport = mysqli_real_escape_string($conn,$_POST['aeroportname']);
 $nomsit = mysqli_real_escape_string($conn,$_POST['nomsit']);
 $photo = mysqli_real_escape_string($conn,$_POST['photo']);
 
@@ -184,55 +256,96 @@ if (mysqli_num_rows($result) > 0) {
   $idpay = mysqli_insert_id($conn);
 }
 
+
+
+
+
 // Insérer la ville
 $sql2 = "INSERT INTO ville (nomvil, descvil, idpay) SELECT '$ville', '$description', pays.idpay FROM pays JOIN continent ON pays.idcon = continent.idcon WHERE pays.nompay = '$pays' AND continent.nomcon = '$continent'";
 mysqli_query($conn, $sql2);
 $idvil = mysqli_insert_id($conn);
 
-// Insérer les éléments nécessaires (gare, hôtel, aéroport)
-if (!empty($gareList)) {
-  foreach ($gareList as $gare) {
-    $sql3 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'gare', '$gare', '$idvil' FROM dual";
+
+
+
+
+// Insérer les éléments nécessaires (hôtel,gare,restaurant,aéroport)
+//hotel:
+$sql3 = "SELECT nomnec FROM necessaire WHERE idvil ='$idvil';";
+if (!empty($_POST['hotels'])) {
+  foreach ($_POST['hotels'] as $value) {
+    $value = ucwords($value);
+    $sql3 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'hotel', '$value', '$idvil';";
     mysqli_query($conn, $sql3);
   }
 } else {
   // Si la liste est vide, insérer l'élément de l'input
-  $sql3 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'gare', '$gare', '$idvil' FROM dual";
+  $value = ucwords($value);
+$sql3 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'hotel', '$value', '$idvil';";
   mysqli_query($conn, $sql3);
 }
 
-if (!empty($hotelList)) {
-  foreach ($hotelList as $hotel) {
-    $sql4 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'hotel', '$hotel', '$idvil' FROM dual";
+
+//gare:
+ $sql4 = "SELECT nomnec FROM necessaire WHERE idvil ='$idvil';";
+if (!empty($_POST['gare'])) {
+  foreach ($_POST['gare'] as $value) {
+    $value = ucwords($value);
+    $sql4 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'gare', '$value', '$idvil';";
     mysqli_query($conn, $sql4);
   }
 } else {
   // Si la liste est vide, insérer l'élément de l'input
-  $sql4 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'hotel', '$hotel', '$idvil' FROM dual";
+  $value = ucwords($value);
+$sql4 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'gare', '$value', '$idvil';";
   mysqli_query($conn, $sql4);
 }
 
-if (!empty($aeroportList)) {
-  foreach ($aeroportList as $aeroport) {
-    $sql5 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'aeroport', '$aeroport', '$idvil' FROM dual";
+//restaurant:
+$sql5 = "SELECT nomnec FROM necessaire WHERE idvil ='$idvil';";
+if (!empty($_POST['resto'])) {
+  foreach ($_POST['resto'] as $value) {
+    $value = ucwords($value);
+    $sql5 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'restaurant', '$value', '$idvil';";
     mysqli_query($conn, $sql5);
   }
 } else {
   // Si la liste est vide, insérer l'élément de l'input
-  $sql5 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'aeroport', '$aeroport', '$idvil' FROM dual";
+  $value = ucwords($value);
+$sql5 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'restaurant', '$value', '$idvil';";
   mysqli_query($conn, $sql5);
 }
 
-// Insérer le site avec sa photo (à partir de l'input)
-if (!empty($nomsit) && !empty($photo)) {
-  $sql6 = "INSERT INTO site (nomsit, cheminphoto, idvil) SELECT '$nomsit', '$photo', '$idvil' FROM dual";
+
+//aeroport:
+$sql6 = "SELECT nomnec FROM necessaire WHERE idvil ='$idvil';";
+if (!empty($_POST['aeroport'])) {
+  foreach ($_POST['aeroport'] as $value) {
+    $value = ucwords($value);
+    $sql6 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'aeroport', '$value', '$idvil';";
+    mysqli_query($conn, $sql6);
+  }
+} else {
+  // Si la liste est vide, insérer l'élément de l'input
+  $value = ucwords($value);
+$sql6 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'aeroport', '$value', '$idvil';";
   mysqli_query($conn, $sql6);
 }
 
 
 
+
+
+// Insérer le site avec sa photo (à partir de l'input)
+if (!empty($nomsit) && !empty($photo)) {
+  $sql7 = "INSERT INTO site (nomsit, cheminphoto, idvil) SELECT '$nomsit', '$photo', '$idvil' FROM dual";
+  mysqli_query($conn, $sql7);
+}
+
+
+
 //sauvegarder dans la bdd et verifier:
-if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($conn, $sql3) && mysqli_query($conn, $sql4) && mysqli_query($conn, $sql5) && mysqli_query($conn, $sql6)){
+if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($conn, $sql3) && mysqli_query($conn, $sql4) && mysqli_query($conn, $sql5) && mysqli_query($conn, $sql6) && mysqli_query($conn, $sql7)){
  //   echo "données enregistrées!";
  header('location: home.php');/*si pas d'erreurs après submit aller vers autre page*/
 }else {
@@ -264,7 +377,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
     <!---on fait appel a header.php pour faire afficher le header--->
     <?php include('./templates/header.php'); ?>
     <section class="ajout-ville">
-        <form method="POST" action="ajout.php">
+        <form method="POST" action="ajout.php" enctype="multipart/form-data">
             <h1>Ajouter une ville</h1>
             <div class="ajout-groupe">
                 <div>
@@ -376,13 +489,23 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                 <div>
                     <h2>Hôtels :</h2>
                     <div class="aligner">
-                        <input type="text" id="inputHotel" name="hotel" placeholder="Nom de l'hôtel"
+                        <input type="text" id="hotel" name="hotelname" placeholder="Nom de l'hôtel"
                             value="<?php echo htmlspecialchars($hotel) ?>">
-                        <button type="button" class="btn-ajouter" id="addHotel">Ajouter</button>
+                        <button type="button" class="btn-ajouter" id="addHotel"
+                            onclick="ajouter(event,'hotel_list','hotel')">Ajouter</button>
                     </div>
 
                     <br>
-                    <select id="selectHotel" multiple></select>
+                    <select id="hotel_list" name="hotel[]" multiple>
+                        <?php
+                                  if (isset($_GET["nomvilmod"])) {
+                                     foreach ($updateHotels as $value) {
+                                echo "<option>" . $value . "</option>";
+                                     }
+                                }
+                             ?>
+
+                    </select>
                     <div><?php echo $errors['hotel'] ?></div>
 
                 </div>
@@ -393,13 +516,22 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                 <div>
                     <h2>Gares :</h2>
                     <div class="aligner">
-                        <input type="text" id="inputGare" name="gare" placeholder="Nom de la gare"
+                        <input type="text" id="gare" name="garename" placeholder="Nom de la gare"
                             value="<?php echo htmlspecialchars($gare) ?>">
-                        <button type="button" class="btn-ajouter" id="addGare">Ajouter</button>
+                        <button type="button" class="btn-ajouter" id="addGare"
+                            onclick="ajouter(event,'gares_list','gare')">Ajouter</button>
                     </div>
 
                     <br>
-                    <select id="selectGare" multiple></select>
+                    <select id="gares_list" name="gares[]" multiple>
+                        <?php
+        if (isset($_GET["nomvilmod"])) {
+          foreach ($updateGares as $value) {
+            echo "<option>" . $value . "</option>";
+          }
+        }
+        ?>
+                    </select>
                     <div><?php echo $errors['gare'] ?></div>
 
                 </div>
@@ -415,41 +547,100 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                 <div>
                     <h2>Aéroports :</h2>
                     <div class="aligner">
-                        <input type="text" id="inputAeroport" name="aeroport" placeholder="Nom de l'aéroport"
+                        <input type="text" id="aeroport" name="aeroportname" placeholder="Nom de l'aéroport"
                             value="<?php echo htmlspecialchars($aeroport) ?>">
-                        <button type="button" class="btn-ajouter" id="addAeroport">Ajouter</button>
+                        <button type="button" class="btn-ajouter" id="addAeroport"
+                            onclick="ajouter(event,'aeroports_list','aeroport')">Ajouter</button>
                     </div>
 
                     <br>
-                    <select id="selectAeroport" multiple></select>
-                    <div><?php echo $errors['gare'] ?></div>
+                    <select id="aeroports_list" name="aeroports[]" multiple>
+                        <?php
+        if (isset($_GET["nomvilmod"])) {
+          foreach ($updateAeroports as $value) {
+            echo "<option>" . $value . "</option>";
+          }
+        }
+        ?>
+                    </select>
+                    <div><?php echo $errors['aeroport'] ?></div>
 
                 </div>
 
+
+
+                <div>
+                    <h2>Restaurants :</h2>
+                    <div class="aligner">
+                        <input type="text" id="restaurant" name="restoname" placeholder="Nom de l'aéroport"
+                            value="<?php echo htmlspecialchars($resto) ?>">
+                        <button type="button" class="btn-ajouter" id="addResto"
+                            onclick="ajouter(event,'restaurants_list','restaurant')">Ajouter</button>
+                    </div>
+
+                    <br>
+                    <select id="restaurants_list" name="restaurants[]" multiple>
+                        <?php
+        if (isset($_GET["nomvilmod"])) {
+            foreach ($updateRestaurant as $value) {
+                echo "<option>" . $value . "</option>";
+            }
+        }
+        ?>
+                    </select>
+                    <div><?php echo $errors['resto'] ?></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="ajout-groupe">
 
 
 
                 <div>
                     <label for="nomsit">Site Touristique:</label>
-                    <input type="text" name="nomsit" value="<?php echo htmlspecialchars($nomsit) ?>" required>
-                    <!---afficher valeur insérée avant si elle existe--->
-                    <br>
+                    <div class="aligner">
+                        <input type="text" name="nomsit" value="<?php echo htmlspecialchars($nomsit) ?>">
+                        <button type="button" class="btn-ajouter" id="addSite"
+                            onclick="ajouter(event,'sites_list','site')">Ajouter</button>
+                    </div>
+                    <select id="sites_list" name="sites[]" multiple>
+                        <?php
+        if (isset($_GET["nomvilmod"])) {
+            foreach ($updateSite as $value) {
+                echo "<option>" . $value . "</option>";
+            }
+        }
+        ?>
+                    </select>
+
+
                     <div><?php echo $errors['nomsit'] ?></div>
                 </div>
-            </div>
 
 
 
-            <div class="ajout-groupe">
+
+
                 <div>
                     <h2>Photos :</h2>
                     <div class="aligner"> <input type="text" id="inputPhoto" name="photo"
                             placeholder="Chemin de la photo" value="<?php echo htmlspecialchars($photo) ?>">
-                        <button type="button" class="btn-ajouter" id="addPhoto">Ajouter</button>
+                        <button type="button" class="btn-ajouter" id="addPhoto"
+                            onclick="ajouter(event,'photos_list','photo')">Ajouter</button>
                     </div>
 
-                    <br>
-                    <select id="selectPhoto" multiple></select>
+                    <select id="photos_list" name="photos[]" multiple>
+                        <?php
+        if (isset($_GET["nomvilmod"])) {
+            foreach ($updatePhoto as $value) {
+                echo "<option>" . $value . "</option>";
+            }
+        }
+        ?>
+                    </select>
                     <div><?php echo $errors['photo'] ?></div>
                 </div>
             </div>
@@ -460,7 +651,38 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
         </form>
     </section>
+    <section id="modalSection">
+        <h4 class="center">Ajouter un pays</h4>
+        <form action="ajout.php" method="post">
+            <div>
+                <label for="continent">Continent :</label>
+                <select id="continent" name="nomcontinent" required>
+                    <option value="<?php echo htmlspecialchars($nomcontinent) ?>">Sélectionnez un continent
+                    </option>
+                    <!-- Code PHP pour charger les continents -->
+                    <?php
+        $continents = array("Europe", "Amérique", "Asie", "Afrique", "Océanie");
+        foreach ($continents as $nomcontinent) {
+          echo "<option value=\"$nomcontinent\">$nomcontinent</option>";
+        }
+      ?>
+                </select>
+            </div>
 
+
+
+
+            <label>Nom de pays :</label>
+            <input type="text" name="nompays" value="<?php echo htmlspecialchars($nompays) ?>">
+            <div class="red-text"><?php echo $errorss['nompays'] ?></div>
+            <div class="center">
+                <input type="submit" value="Submit" name="submitpays" class="btn brand z-depth-0">
+            </div>
+
+
+            <button id="closeModalButton">fermer</button>
+        </form>
+    </section>
     <img src="./assets/carte-monde.png" alt="carte-du-monde" class="carte">
     <script src="cssjs/index.js"></script>
 </body>
