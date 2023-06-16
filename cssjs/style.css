@@ -498,8 +498,9 @@ input[name="description"] {
   margin: 0;
   font-size: 18px;
 }
-.ajout-ville select {
-  height: auto;
+.ajout-ville select:not([class="champpayscontient"]) {
+  min-height: 150px;
+  max-height: max-content;
 }
 /*modal ajout-pays:*/
 #modalSection {
@@ -557,4 +558,18 @@ input[name="description"] {
 }
 .btn-ajouter.close {
   background-color: red;
+}
+/* footer */
+footer {
+  position: absolute;
+
+  left: 250px;
+  background-color: #181f54;
+  width: calc(100vw - 250px);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
 }

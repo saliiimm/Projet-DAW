@@ -1,14 +1,7 @@
 <?php 
 //on inclut le fichier qui fera connecter cette page à noter bdd:
-//include('/config/bd_connect.php');
+include('config/bd_connect.php');
 
-//on se connecte à notre base de donnée en insérant le host,le nom d'utilisateur le mot de passe ainsi que le nom de notre databse dans cet ordre
-$conn = mysqli_connect('localhost','Salim&Ramzy','1234','voyage');
-
-//Par la suite on verifie si l'on s'est bien connecté à la DB:
-if(!$conn){
-    echo 'connection error: ' . mysqli_connect_error();
-}   
 
 
 // Vérifier si le formulaire de recherche a été soumis
@@ -131,7 +124,7 @@ mysqli_close($conn);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Acceuil</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cssjs/style.css" />
 </head>
 
 <body>
@@ -206,7 +199,7 @@ mysqli_close($conn);
     </section>
 
     <img src="./assets/valise.png" alt="valise-de-voyage" class="valise">
-
+    <?php include('./templates/footer.php'); ?>
     <script src="cssjs/index.js"></script>
 </body>
 

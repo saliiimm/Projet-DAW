@@ -1,14 +1,8 @@
 <?php 
 //on inclut le fichier qui fera connecter cette page à noter bdd:
-//include('/config/bd_connect.php');
+include('config/bd_connect.php');
 
-//on se connecte à notre base de donnée en insérant le host,le nom d'utilisateur le mot de passe ainsi que le nom de notre databse dans cet ordre
-$conn = mysqli_connect('localhost','Salim&Ramzy','1234','voyage');
 
-//Par la suite on verifie si l'on s'est bien connecté à la DB:
-if(!$conn){
-    echo 'connection error: ' . mysqli_connect_error();
-}    
 
 
 
@@ -194,28 +188,23 @@ if(isset($_POST['submit'])){
 
 
 
-    //On verifie le site touristique:
-    if(empty($_POST['nomsit'])){
-  
-        $errors['nomsit']="Veuillez insérer un nom de site touristique valide! ";
-    } else {
-        $nomsit = htmlspecialchars($_POST['nomsit']);
-        if(!preg_match('/^[\p{L}0-9\s.,\'’\-!?"()]+$/u', $nomsit)){
-            $errors['nomsit']="Veuillez insérer un nom de site touristique valide! ";
-        }
+// On vérifie le nom du site
+if (empty($_POST['nomsit'])) {
+    $errors['nomsit'] = "Veuillez insérer un nom de site valide! ";
+} else {
+    $nomsit = htmlspecialchars($_POST['nomsit']);
+    if (!preg_match('/^[\p{L}0-9\s.,\'’\-!?"()]+$/u', $nomsit)) {
+        $errors['nomsit'] = "Veuillez insérer un nom de site touristique valide! ";
     }
+}
 
+// On vérifie le lien de la photo
+if (empty($_POST['photo'])) {
+    $errors['photo'] = "Veuillez insérer une photo! ";
+} else {
+    $photo = htmlspecialchars($_FILES['photo']);
+}
 
-
-    //On verifie le lien de la photo:
-    if(empty($_POST['photo'])){
-  
-        $errors['photo']="Veuillez insérer une photo! ";
-    } else {
-        $photo = htmlspecialchars($_POST['photo']);
-     /*   if(!preg_match('#\b(https?://\S+\.(?:png|jpe?g|gif)\S*)\b#i', $photo)){
-           $errors['photo']="Veuillez insérer ou choisir une photo avec un format valide! ";*/
-        }
     
 
 
@@ -234,7 +223,7 @@ $hotel = mysqli_real_escape_string($conn,$_POST['hotelname']);
 $resto = mysqli_real_escape_string($conn,$_POST['restoname']);
 $aeroport = mysqli_real_escape_string($conn,$_POST['aeroportname']);
 $nomsit = mysqli_real_escape_string($conn,$_POST['nomsit']);
-$photo = mysqli_real_escape_string($conn,$_POST['photo']);
+$photo = mysqli_real_escape_string($conn,$_FILES['photo']);
 
 
 
@@ -338,9 +327,18 @@ $sql6 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'aeroport', '$va
 
 // Insérer le site avec sa photo (à partir de l'input)
 if (!empty($nomsit) && !empty($photo)) {
-  $sql7 = "INSERT INTO site (nomsit, cheminphoto, idvil) SELECT '$nomsit', '$photo', '$idvil' FROM dual";
-  mysqli_query($conn, $sql7);
+   foreach ($_POST['nomsit'] as $value) {
+    foreach($FILES['photo'] as $value2){
+          $value = ucwords($value);
+          $value2 = ucwords($value2);
+    $sql7 = "INSERT INTO site (nomsit, cheminphoto, idvil) SELECT '$value', '$value2', '$idvil';";
+    mysqli_query($conn, $sql7);
+    }
+  
+  }
 }
+
+
 
 
 
@@ -370,7 +368,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ajouter une ville</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cssjs/style.css" />
 </head>
 
 <body>
@@ -397,7 +395,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                 <div>
                     <label for="continent">Continent :</label>
                     <div class="aligner">
-                        <select id="continent" name="continent" required>
+                        <select id="continent" name="continent" class="champpayscontient" required>
                             <option value="<?php echo htmlspecialchars($continent) ?>">Sélectionnez un continent
                             </option>
                             <!-- Code PHP pour charger les continents -->
@@ -426,7 +424,8 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                 <div>
                     <label for="pays">Pays :</label>
                     <div class="aligner">
-                        <select id="pays" name="pays" value="<?php echo htmlspecialchars($pays) ?>" required>
+                        <select id="pays" name="pays" value="<?php echo htmlspecialchars($pays) ?>"
+                            class="champpayscontient" required>
                             <option value="">Sélectionnez un pays</option>
                             <!-- Code PHP pour charger les pays -->
                             <?php
@@ -619,79 +618,15 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
 
 
+            <!-- Formulaire pour ajouter un site -->
+            <label for="nomsit">Nom du site :</label>
+            <input type="text" id="nomsit" name="nomsit" value="<?php echo htmlspecialchars($nomsit); ?>">
+            <div class="red-text"><?php echo $errors['nomsit']; ?></div>
 
+            <label for="photo">Lien de la photo :</label>
+            <input type="file" accept="image/*" id="photo" name="photo" value="<?php echo htmlspecialchars($photo); ?>">
+            <div class="red-text"><?php echo $errors['photo']; ?></div>
 
-
-
-
-
-
-
-
-
-            <div class="ajout-groupe">
-
-
-
-                <div>
-                    <h2>Site Touristique:</h2>
-                    <div class="aligner">
-                        <input type="text" name="nomsit" placeholder="Site touristique"
-                            value="<?php echo htmlspecialchars($nomsit) ?>">
-                        <button type="button" class="btn-ajouter" id="addSite"
-                            onclick="ajouter(event,'sites_list','site')">Ajouter</button>
-                        <div>
-                            <h6>Sites touristiques:</h6>
-                            <select id="sites_list" name="sites[]" multiple>
-                                <?php
-        if (isset($_GET["nomvilmod"])) {
-            foreach ($updateSite as $value) {
-                echo "<option>" . $value . "</option>";
-            }
-        }
-        ?>
-                            </select>
-                        </div>
-                    </div>
-
-
-
-                    <div><?php echo $errors['nomsit'] ?></div>
-                </div>
-            </div>
-
-
-
-
-
-
-
-            <div class="ajout-groupe">
-                <div>
-                    <h2>Photos :</h2>
-                    <div class="aligner">
-                        <input type="text" id="inputPhoto" name="photo" placeholder="Chemin de la photo"
-                            value="<?php echo htmlspecialchars($photo) ?>">
-                        <button type="button" class="btn-ajouter" id="addPhoto"
-                            onclick="ajouter(event,'photos_list','photo')">Ajouter</button>
-                        <div>
-                            <h6>Photos:</h6>
-                            <select id="photos_list" name="photos[]" multiple>
-                                <?php
-        if (isset($_GET["nomvilmod"])) {
-            foreach ($updatePhoto as $value) {
-                echo "<option>" . $value . "</option>";
-            }
-        }
-        ?>
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div><?php echo $errors['photo'] ?></div>
-                </div>
-            </div>
 
 
             <button type="submit" value="submit" name=submit>Ajouter</button>
@@ -732,6 +667,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
         </form>
     </section>
+    <?php include('./templates/footer.php'); ?>
     <script src="cssjs/index.js"></script>
 </body>
 

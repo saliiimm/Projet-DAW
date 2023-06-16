@@ -1,15 +1,7 @@
 <?php
 
 // on inclut le fichier qui fera connecter cette page à notre bdd :
-// include('/config/bd_connect.php');
-
-// on se connecte à notre base de donnée en insérant le host, le nom d'utilisateur, le mot de passe ainsi que le nom de notre database dans cet ordre
-$conn = mysqli_connect('localhost', 'Salim&Ramzy', '1234', 'voyage');
-
-// Par la suite, on vérifie si l'on s'est bien connecté à la DB
-if (!$conn) {
-    echo 'connection error: ' . mysqli_connect_error();
-}
+include('config/bd_connect.php');
 
 // Récupérer l'identifiant de la ville depuis l'URL
 $idVille = $_GET['id'];
@@ -69,7 +61,7 @@ mysqli_close($conn);
 <head>
     <meta charset="UTF-8">
     <title>Accueil</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cssjs/style.css" />
     <link href="//db.onlinewebfonts.com/c/35c8dd5006b186a4bcfaebc6670f805f?family=Skyfont" rel="stylesheet"
         type="text/css" />
 </head>
@@ -159,6 +151,7 @@ mysqli_close($conn);
         </div>
         </div>
     </section>
+    <?php include('./templates/footer.php'); ?>
     <script src="/cssjs/index.js"></script>
 </body>
 
