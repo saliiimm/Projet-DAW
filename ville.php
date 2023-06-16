@@ -76,7 +76,7 @@ mysqli_close($conn);
         </div>
         <?php if (!empty($cheminphoto)): ?>
         <div class="image">
-            <img src="<?php echo $cheminphoto; ?>" alt="Image de la ville">
+            <img src="<?php echo htmlspecialchars ($cheminphoto); ?>" alt="image de la ville">
         </div>
         <?php endif; ?>
     </div>

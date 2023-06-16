@@ -62,6 +62,50 @@ $sql = "SELECT ville.idvil, ville.nomvil, pays.nompay FROM ville
     mysqli_free_result($result);
 }
 
+
+
+// Suppression d'une ville
+if (isset($_POST['delete'])) {
+    $id = mysqli_real_escape_string($conn, $_POST['delete']);
+
+       // Suppression des nécessaires en rapport avec la ville
+    $sql = "DELETE FROM necessaire WHERE idvil = $id";
+    mysqli_query($conn, $sql);
+
+    // Suppression des sites en rapport avec la ville
+    $sql = "DELETE FROM site WHERE idvil = $id";
+    mysqli_query($conn, $sql);
+
+    // Suppression de la ville
+    $sql = "DELETE FROM ville WHERE idvil = $id";
+    mysqli_query($conn, $sql);
+
+    if (mysqli_query($conn, $sql)) {
+        // La suppression a réussi, rediriger vers la page d'accueil
+        header('Location: home.php');
+    } else {
+        // En cas d'erreur, afficher un message d'erreur
+        echo 'Erreur de suppression : ' . mysqli_error($conn);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Fermer la connexion à la base de données
 mysqli_close($conn);
 
@@ -137,7 +181,11 @@ mysqli_close($conn);
                         </div>
                         <div class="icones">
                             <img src="./assets/btn-modifier.png" alt="modifier-btn">
-                            <img src="./assets/supprimer-btn.png" alt="supprimer-btn">
+                            <form method="POST" class="delete-form">
+                                <input type="hidden" name="delete" value="<?php echo $ville['idvil']; ?>">
+                                <button type="submit" class="delete-btn"><img src="./assets/supprimer-btn.png"
+                                        alt="supprimer-btn"></button>
+                            </form>
                         </div>
                     </div>
                     <?php  endforeach; ?>
@@ -153,7 +201,8 @@ mysqli_close($conn);
     </section>
 
     <img src="./assets/valise.png" alt="valise-de-voyage" class="valise">
-    <script src="./cssjs/index.js"></script>
+
+    <script src="cssjs/index.js"></script>
 </body>
 
 </html>
