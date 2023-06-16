@@ -12,6 +12,7 @@ bnt1.addEventListener("click", () => {
   prenom.innerText = "Ramzy";
   matricule.innerText = "212000000000";
   email.innerText = "ramzybelaiboud@gmail.com";
+  email.href = "mailto:ramzybelaiboud@gmail.com";
   groupe.innerText = "6";
   console.log("bonjou");
   bnt1.style.filter = "brightness(1.75)";
@@ -22,6 +23,7 @@ bnt2.addEventListener("click", () => {
   prenom.innerText = "Salim";
   matricule.innerText = "212131095534";
   email.innerText = "salimghalem40@gmail.com";
+  email.href = "mailto:salimghalem40@gmail.com";
   groupe.innerText = "4";
   bnt2.style.filter = "brightness(1.75)";
   bnt1.style.filter = "brightness(0.75)";
@@ -78,3 +80,36 @@ function ajouter(event, parent, child) {
   list.appendChild(p);
   //list.insertBefore(p,list.firstElementChild);
 }
+
+//diaporama ville.php:
+document.addEventListener("DOMContentLoaded", function () {
+  const sitePhotos = document.querySelector(".site-photos");
+  const prevButton = document.querySelector(".prev-button");
+  const nextButton = document.querySelector(".next-button");
+
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    const slides = sitePhotos.querySelectorAll(".site-photo");
+    if (index >= 0 && index < slides.length) {
+      slides.forEach(function (slide) {
+        slide.style.display = "none";
+      });
+      slides[index].style.display = "block";
+      currentSlide = index;
+    }
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  prevButton.addEventListener("click", prevSlide);
+  nextButton.addEventListener("click", nextSlide);
+
+  showSlide(0); // Afficher la première slide au chargement de la page
+});

@@ -1,6 +1,20 @@
 @import url("https://fonts.cdnfonts.com/css/kollektif");
 @import url("https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap");
-
+@import url(//db.onlinewebfonts.com/c/35c8dd5006b186a4bcfaebc6670f805f?family=Skyfont);
+@font-face {
+  font-family: "Skyfont";
+  src: url("//db.onlinewebfonts.com/t/35c8dd5006b186a4bcfaebc6670f805f.eot");
+  src: url("//db.onlinewebfonts.com/t/35c8dd5006b186a4bcfaebc6670f805f.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/35c8dd5006b186a4bcfaebc6670f805f.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/35c8dd5006b186a4bcfaebc6670f805f.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/35c8dd5006b186a4bcfaebc6670f805f.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/35c8dd5006b186a4bcfaebc6670f805f.svg#Skyfont")
+      format("svg");
+}
 /* Style général */
 body {
   font-family: "kollektif";
@@ -266,137 +280,10 @@ nav hr {
 .icones {
   margin-left: 3px;
 }
-/*pop-up*/
-/* The Modal (background) */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 4;
-  padding: 280px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* Modal Content/Box */
-.modal-content {
-  position: relative;
-  background-color: white;
-  margin: auto;
-  border: 1px solid #888;
-  width: 70%;
-  height: 300px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  animation-name: animatetop;
-  animation-duration: 0.4s;
-  font-family: "El Messiri";
-}
-@keyframes animatetop {
-  from {
-    top: -300px;
-    opacity: 0;
-  }
-  to {
-    top: 0;
-    opacity: 1;
-  }
-}
-/* Modal Header */
-.modal-header {
-  background-color: red;
-  color: white;
-  width: 100%;
-  height: 10%;
-  display: flex;
-  text-align: center;
-  justify-content: space-between;
-}
-.modal-header h2 {
-  margin-left: 5px;
-  font-size: 20px;
-}
-/* Modal Body */
-.modal-body {
-  background-color: white;
-  color: rgb(185, 14, 14);
-  height: 65%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 21px;
-}
-#btndonne {
-  list-style-type: none;
-  width: 70px;
-  height: 25px;
-  border: 2px solid red;
-  color: black;
-  background-color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 5px;
-}
-#btndonne:hover {
-  transform: scale(1.1);
-  transition: all 0.3s;
-}
-
-#tbuser {
-  color: black;
-  border: 2px solid red;
-  height: 25px;
-  border-radius: 4px;
-}
-#output1 {
-  display: flex;
-  margin-left: 5px;
-  font-size: 18px;
-}
-/* Modal Footer */
-.modal-footer {
-  background-color: red;
-  color: white;
-  height: 25%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-footer img {
-  height: 28px;
-  margin-left: 5px;
-  animation: beat 0.3s infinite alternate;
-}
-@keyframes beat {
-  to {
-    transform: scale(1.2);
-  }
-}
-/* The Close Button */
-.close {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  transition: all ease-in-out 0.3s;
-  display: block;
-  position: static;
-  margin-right: 5px;
-  margin-top: -5px;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-  transform: scale(1.2);
-  transition: all ease-in-out 0.3s;
+.icones form button {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 /*ville.php*/
@@ -404,24 +291,154 @@ nav hr {
   width: fit-content;
   height: fit-content;
 }
+.gras {
+  font-weight: bolder;
+}
+/*partie 1*/
+.partie1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #181f54;
+  margin-top: 25px;
+}
+.partie1 hr {
+  width: 370px;
+  height: 2px;
+}
+.partie1 h1 {
+  font-family: "Skyfont";
+  font-size: 125px;
+}
+.partie1 h2,
+.partie1 h1 {
+  margin: 4px 0 4px 0;
+}
+.partie2 .gras {
+  font-size: 22px;
+}
+/*partie 2*/
+.partie2 {
+  border: 2px solid #181f54;
+  border-radius: 12px;
+  margin-top: 25px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 150px;
+}
+/*principales informations*/
+.principales {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 10px;
+  width: 65%;
+}
+.principales div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.principales h5 {
+  margin: 10px 0 4px 0;
+}
+.principales div h5 + h5 {
+  font-size: 16px;
+  font-weight: 500;
+}
+/*details*/
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.transport {
+  display: flex;
+  align-items: start;
+  justify-content: space-around;
+}
+.details h3 {
+  margin-bottom: 3px;
+}
+.details p {
+  margin-top: 0;
+}
+.transport div {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  border: 2px solid #181f54;
+  border-radius: 11px;
+  margin: 15px;
+  min-height: 200px;
+  width: 190px;
+}
+/*diaporama*/
+.site-photos {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.site-photo {
+  margin-right: 10px;
+}
+
+.prev-button,
+.next-button {
+  margin-top: 10px;
+}
+
+/* Personnalisez le style des boutons de navigation selon vos besoins */
 
 /* Style ajout.php */
+.intro-form {
+  margin-bottom: 25px;
+}
+.intro-form h2 {
+  font-size: 45px;
+  margin: 15px 0 5px 0;
+}
+.intro-form p {
+  margin: 0;
+}
 .ajout-ville {
   margin-left: 280px;
+  padding: 25px;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.ajout-groupe div {
+  margin-right: 55px;
 }
 .ajout-ville input,
 .ajout-ville select {
   width: 185px;
-  height: 27px;
+  height: 27px !important;
   border: 2px solid #181f54;
   border-radius: 11px;
+}
+input[name="description"] {
+  width: 350px !important;
+  height: 200px !important;
+  justify-content: baseline;
 }
 .btnplus {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background-color: white;
-  color: #181f54;
+  background-color: #181f54;
+  color: white;
   margin-left: 5px;
   display: flex;
   align-items: center;
@@ -440,24 +457,28 @@ nav hr {
   width: 105px;
   height: 30px;
   border-radius: 22px;
-  background-color: white;
-  color: #181f54;
   font-size: 17px;
   font-weight: bold;
   margin-left: 5px;
-}
-.ajout-ville button[type="submit"] {
   background-color: #181f54;
   color: white;
 }
-.ajout-ville form,
+
+.ajout-ville button[type="submit"] {
+  background-color: #181f54;
+  color: white;
+  margin-top: 15px;
+}
+
 .ajout-groupe {
   display: flex;
   align-items: center;
 }
 .ajout-ville form {
+  display: flex;
   justify-content: center;
   flex-direction: column;
+  align-items: left;
 }
 .aligner {
   display: flex !important;
@@ -465,10 +486,17 @@ nav hr {
   justify-content: center !important;
   flex-direction: row !important;
 }
+.aligner > * {
+  margin-right: 55px;
+}
 .ajout-groupe {
-  justify-content: space-around;
+  justify-content: left;
   width: 100%;
   height: auto;
+}
+.ajout-groupe h6 {
+  margin: 0;
+  font-size: 18px;
 }
 .ajout-ville select {
   height: auto;
@@ -522,25 +550,11 @@ nav hr {
   text-align: center;
   margin-top: 20px;
 }
-
-#modalSection .btn {
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
+#modalSection .center.btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
-
-#modalSection .btn.brand {
-  background-color: #1e88e5;
-}
-
-#modalSection button a {
-  color: #fff;
-  text-decoration: none;
-}
-
-#modalSection button a:hover {
-  text-decoration: underline;
+.btn-ajouter.close {
+  background-color: red;
 }

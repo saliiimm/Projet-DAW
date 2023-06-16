@@ -377,8 +377,12 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
     <!---on fait appel a header.php pour faire afficher le header--->
     <?php include('./templates/header.php'); ?>
     <section class="ajout-ville">
+        <div class="intro-form">
+            <h2>Formulaire</h2>
+            <p>Remplissez le formulaire ci-dessous pour ajouter la ville de votre choix</p>
+        </div>
+
         <form method="POST" action="ajout.php" enctype="multipart/form-data">
-            <h1>Ajouter une ville</h1>
             <div class="ajout-groupe">
                 <div>
                     <label for="ville">Ville :</label>
@@ -390,24 +394,6 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                 </div>
 
 
-                <div>
-                    <label for="description">Description :</label>
-                    <input type="text" name="description" value="<?php echo htmlspecialchars($description) ?>" required>
-                    <!---afficher valeur insérée avant si elle existe--->
-                    <br>
-                    <div><?php echo $errors['description'] ?></div>
-
-                </div>
-            </div>
-
-
-
-
-
-
-
-
-            <div class="ajout-groupe">
                 <div>
                     <label for="continent">Continent :</label>
                     <div class="aligner">
@@ -422,7 +408,6 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
         }
       ?>
                         </select>
-                        <button type="button" class="btnplus" id="nouveauContinentBtn"> <span>+</span> </button>
                     </div>
 
                     <br>
@@ -468,6 +453,26 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                     <div><?php echo $errors['pays'] ?></div>
 
                 </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div class="ajout-groupe ">
+                <div>
+                    <label for="description">Description :</label>
+                    <input type="text" name="description" value="<?php echo htmlspecialchars($description) ?>" required>
+                    <!---afficher valeur insérée avant si elle existe--->
+                    <br>
+                    <div><?php echo $errors['description'] ?></div>
+
+                </div>
             </div>
 
 
@@ -493,11 +498,10 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                             value="<?php echo htmlspecialchars($hotel) ?>">
                         <button type="button" class="btn-ajouter" id="addHotel"
                             onclick="ajouter(event,'hotel_list','hotel')">Ajouter</button>
-                    </div>
-
-                    <br>
-                    <select id="hotel_list" name="hotel[]" multiple>
-                        <?php
+                        <div>
+                            <h6>Hotels:</h6>
+                            <select id="hotel_list" name="hotel[]" multiple>
+                                <?php
                                   if (isset($_GET["nomvilmod"])) {
                                      foreach ($updateHotels as $value) {
                                 echo "<option>" . $value . "</option>";
@@ -505,14 +509,19 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                                 }
                              ?>
 
-                    </select>
+                            </select>
+                        </div>
+
+                    </div>
+
                     <div><?php echo $errors['hotel'] ?></div>
 
                 </div>
 
+            </div>
 
 
-
+            <div class="ajout-groupe">
                 <div>
                     <h2>Gares :</h2>
                     <div class="aligner">
@@ -520,24 +529,25 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                             value="<?php echo htmlspecialchars($gare) ?>">
                         <button type="button" class="btn-ajouter" id="addGare"
                             onclick="ajouter(event,'gares_list','gare')">Ajouter</button>
-                    </div>
-
-                    <br>
-                    <select id="gares_list" name="gares[]" multiple>
-                        <?php
+                        <div>
+                            <h6>Gares:</h6>
+                            <select id="gares_list" name="gares[]" multiple>
+                                <?php
         if (isset($_GET["nomvilmod"])) {
           foreach ($updateGares as $value) {
             echo "<option>" . $value . "</option>";
           }
         }
         ?>
-                    </select>
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div><?php echo $errors['gare'] ?></div>
 
                 </div>
-
             </div>
-
 
 
 
@@ -551,24 +561,35 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                             value="<?php echo htmlspecialchars($aeroport) ?>">
                         <button type="button" class="btn-ajouter" id="addAeroport"
                             onclick="ajouter(event,'aeroports_list','aeroport')">Ajouter</button>
-                    </div>
-
-                    <br>
-                    <select id="aeroports_list" name="aeroports[]" multiple>
-                        <?php
+                        <div>
+                            <h6>Aeroports:</h6>
+                            <select id="aeroports_list" name="aeroports[]" multiple>
+                                <?php
         if (isset($_GET["nomvilmod"])) {
           foreach ($updateAeroports as $value) {
             echo "<option>" . $value . "</option>";
           }
         }
         ?>
-                    </select>
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div><?php echo $errors['aeroport'] ?></div>
 
                 </div>
 
 
+            </div>
 
+
+
+
+
+
+
+            <div class="ajout-groupe">
                 <div>
                     <h2>Restaurants :</h2>
                     <div class="aligner">
@@ -576,23 +597,36 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                             value="<?php echo htmlspecialchars($resto) ?>">
                         <button type="button" class="btn-ajouter" id="addResto"
                             onclick="ajouter(event,'restaurants_list','restaurant')">Ajouter</button>
-                    </div>
-
-                    <br>
-                    <select id="restaurants_list" name="restaurants[]" multiple>
-                        <?php
+                        <div>
+                            <h6>Restaurants:</h6>
+                            <select id="restaurants_list" name="restaurants[]" multiple>
+                                <?php
         if (isset($_GET["nomvilmod"])) {
             foreach ($updateRestaurant as $value) {
                 echo "<option>" . $value . "</option>";
             }
         }
         ?>
-                    </select>
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div><?php echo $errors['resto'] ?></div>
 
                 </div>
-
             </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
             <div class="ajout-groupe">
@@ -600,51 +634,64 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
 
                 <div>
-                    <label for="nomsit">Site Touristique:</label>
+                    <h2>Site Touristique:</h2>
                     <div class="aligner">
-                        <input type="text" name="nomsit" value="<?php echo htmlspecialchars($nomsit) ?>">
+                        <input type="text" name="nomsit" placeholder="Site touristique"
+                            value="<?php echo htmlspecialchars($nomsit) ?>">
                         <button type="button" class="btn-ajouter" id="addSite"
                             onclick="ajouter(event,'sites_list','site')">Ajouter</button>
-                    </div>
-                    <select id="sites_list" name="sites[]" multiple>
-                        <?php
+                        <div>
+                            <h6>Sites touristiques:</h6>
+                            <select id="sites_list" name="sites[]" multiple>
+                                <?php
         if (isset($_GET["nomvilmod"])) {
             foreach ($updateSite as $value) {
                 echo "<option>" . $value . "</option>";
             }
         }
         ?>
-                    </select>
+                            </select>
+                        </div>
+                    </div>
+
 
 
                     <div><?php echo $errors['nomsit'] ?></div>
                 </div>
+            </div>
 
 
 
 
 
+
+
+            <div class="ajout-groupe">
                 <div>
                     <h2>Photos :</h2>
-                    <div class="aligner"> <input type="text" id="inputPhoto" name="photo"
-                            placeholder="Chemin de la photo" value="<?php echo htmlspecialchars($photo) ?>">
+                    <div class="aligner">
+                        <input type="text" id="inputPhoto" name="photo" placeholder="Chemin de la photo"
+                            value="<?php echo htmlspecialchars($photo) ?>">
                         <button type="button" class="btn-ajouter" id="addPhoto"
                             onclick="ajouter(event,'photos_list','photo')">Ajouter</button>
-                    </div>
-
-                    <select id="photos_list" name="photos[]" multiple>
-                        <?php
+                        <div>
+                            <h6>Photos:</h6>
+                            <select id="photos_list" name="photos[]" multiple>
+                                <?php
         if (isset($_GET["nomvilmod"])) {
             foreach ($updatePhoto as $value) {
                 echo "<option>" . $value . "</option>";
             }
         }
         ?>
-                    </select>
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div><?php echo $errors['photo'] ?></div>
                 </div>
             </div>
-
 
 
             <button type="submit" value="submit" name=submit>Ajouter</button>
@@ -652,8 +699,9 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
         </form>
     </section>
     <section id="modalSection">
-        <h4 class="center">Ajouter un pays</h4>
+
         <form action="ajout.php" method="post">
+            <h4 class="center">Ajouter un pays</h4>
             <div>
                 <label for="continent">Continent :</label>
                 <select id="continent" name="nomcontinent" required>
@@ -675,15 +723,15 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
             <label>Nom de pays :</label>
             <input type="text" name="nompays" value="<?php echo htmlspecialchars($nompays) ?>">
             <div class="red-text"><?php echo $errorss['nompays'] ?></div>
-            <div class="center">
-                <input type="submit" value="Submit" name="submitpays" class="btn brand z-depth-0">
+            <div class="center btns">
+                <input type="submit" value="Submit" name="submitpays" class="btn-ajouter">
+
+                <button id="closeModalButton" class="btn-ajouter close">fermer</button>
             </div>
 
 
-            <button id="closeModalButton">fermer</button>
         </form>
     </section>
-    <img src="./assets/carte-monde.png" alt="carte-du-monde" class="carte">
     <script src="cssjs/index.js"></script>
 </body>
 
