@@ -113,3 +113,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   showSlide(0); // Afficher la première slide au chargement de la page
 });
+
+//modifier header selon la page dans laquelle nous sommes:
+
+var btnHeader = document.querySelector(".btn-ville");
+var currentURL = window.location.href;
+
+if (currentURL.includes("ajout.php")) {
+  btnHeader.href = "../projet-daw/home.php";
+  btnHeader.textContent = "Acceuil";
+} else {
+  btnHeader.href = "../projet-daw/ajout.php";
+  btnHeader.textContent = "Ajouter une Ville";
+}

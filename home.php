@@ -144,23 +144,28 @@ mysqli_close($conn);
                 <div class="part">
                     <div>
                         <label for="continent">Continent</label>
-                        <input type="text" name="continent">
+                        <input type="text" name="continent"
+                            value="<?php echo isset($continent) ? htmlspecialchars($continent) : ''; ?>">
                     </div>
                     <div>
                         <label for="pays">Pays</label>
-                        <input type="text" name="pays">
+                        <input type="text" name="pays"
+                            value="<?php echo isset($pays) ? htmlspecialchars($pays) : ''; ?>">
                     </div>
                 </div>
                 <div class="part">
                     <div>
                         <label for="ville">Ville</label>
-                        <input type="text" name="ville">
+                        <input type="text" name="ville"
+                            value="<?php echo isset($ville) ? htmlspecialchars($ville) : ''; ?>">
                     </div>
                     <div>
                         <label for="site">Site</label>
-                        <input type="text" name="site">
+                        <input type="text" name="site"
+                            value="<?php echo isset($site) ? htmlspecialchars($site) : ''; ?>">
                     </div>
                 </div>
+
                 <button type="submit" value="submit" name=submit>Rechercher</button>
 
             </form>
