@@ -2,9 +2,18 @@
 
 // on inclut le fichier qui fera connecter cette page à notre bdd :
 include('config/bd_connect.php');
+//on se connecte à notre base de donnée en insérant le host,le nom d'utilisateur le mot de passe ainsi que le nom de notre databse dans cet ordre
+$conn = mysqli_connect('localhost','Salim&Ramzy','1234','voyage');
+
+//Par la suite on verifie si l'on s'est bien connecté à la DB:
+if(!$conn){
+    echo 'connection error: ' . mysqli_connect_error();
+}    
+
 
 // Récupérer l'identifiant de la ville depuis l'URL
-$idVille = $_GET['id'];
+if (isset($_GET['id'])) {
+    $idVille = $_GET['id'];
 
 // Effectuer une requête pour récupérer les informations de la ville spécifiée
 $sql = "SELECT ville.nomvil, pays.nompay, continent.nomcon, ville.descvil, gare.nomnec AS gare, hotel.nomnec AS hotel, aeroport.nomnec AS aeroport, site.cheminphoto
@@ -15,7 +24,7 @@ $sql = "SELECT ville.nomvil, pays.nompay, continent.nomcon, ville.descvil, gare.
         INNER JOIN pays ON ville.idpay = pays.idpay
         INNER JOIN continent ON pays.idcon = continent.idcon
         LEFT JOIN site ON ville.idvil = site.idvil
-        WHERE ville.idvil = '$idVille'";
+        WHERE ville.idvil = $idVille";
 
 $result = mysqli_query($conn, $sql);
 
@@ -49,6 +58,11 @@ $gares = mysqli_fetch_all($resultGares, MYSQLI_ASSOC);
 $sqlAeroports = "SELECT nomnec FROM necessaire WHERE idvil = $idVille AND typenec = 'aeroport'";
 $resultAeroports = mysqli_query($conn, $sqlAeroports);
 $aeroports = mysqli_fetch_all($resultAeroports, MYSQLI_ASSOC);
+
+} else {
+    echo "ID de ville non spécifié.";
+    exit();
+}
 
 // Fermer la connexion à la base de données
 mysqli_close($conn);
@@ -96,9 +110,13 @@ mysqli_close($conn);
                 <h3 class="gras">Description</h3>
                 <p><?php echo htmlspecialchars($ville['descvil']); ?></p>
                 <h3 class="gras">Sites</h3>
+
+                <h4 class="gras">Photos :</h4>
                 <div class="diaporama">
-                    <h4 class="gras">Photos :</h4>
+
+
                     <div class="site-photos">
+                        <button class="prev-button">Précédent</button>
                         <?php if ($cheminphoto) : ?>
                         <?php $photos = explode(",", $cheminphoto); ?>
                         <?php foreach ($photos as $photo) : ?>
@@ -109,9 +127,12 @@ mysqli_close($conn);
                         <?php else : ?>
                         <p>Aucune photo disponible.</p>
                         <?php endif; ?>
+
+                        <button class="next-button">Suivant</button>
                     </div>
-                    <button class="prev-button">Précédent</button>
-                    <button class="next-button">Suivant</button>
+
+
+
                 </div>
             </div>
             <div class="transport">

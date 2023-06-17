@@ -347,7 +347,8 @@ nav hr {
 .principales h5 {
   margin: 10px 0 4px 0;
 }
-.principales div h5 + h5 {
+.principales div h5 + h5,
+.colisée {
   font-size: 16px;
   font-weight: 500;
 }
@@ -389,11 +390,12 @@ nav hr {
 
 .site-photo {
   margin-right: 10px;
+  max-width: 100%;
 }
 
 .prev-button,
 .next-button {
-  margin-top: 10px;
+  margin: 10px 15px 0 15px;
 }
 
 /* Personnalisez le style des boutons de navigation selon vos besoins */
@@ -450,6 +452,8 @@ input[name="description"] {
   font-size: 20px;
 }
 .btn-ajouter,
+.prev-button,
+.next-button,
 .ajout-ville button[type="submit"] {
   display: flex;
   align-items: center;
