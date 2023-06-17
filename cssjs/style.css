@@ -39,7 +39,7 @@ header {
   left: 250px;
   height: 310px;
   width: calc(100vw - 250px);
-  background-image: url(./assets/paysage-monatgne.jpg);
+  background-image: url(../assets/paysage-monatgne.jpg);
   background-size: cover; /* Redimensionner l'image pour couvrir tout l'élément */
   color: #fff;
   display: flex;
