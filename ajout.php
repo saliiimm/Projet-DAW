@@ -8,7 +8,7 @@ include('config/bd_connect.php');
 
 
 //on initialise nos vars dabs lesquels on recupere les données de l'utilisateur:
-$ville = $description = $continent = $pays = $hotel = $gare = $aeroport = $resto = $nomsit = $photo = $sites = '';
+$ville = $description = $continent = $pays = $hotel = $gare = $aeroport = $resto = $nomsit = $photo = $sites =$value = '';
 
 
 
@@ -189,21 +189,21 @@ if(isset($_POST['submit'])){
 
 
 // On vérifie le nom du site
-if (empty($_POST['nomsit'])) {
+if (empty($_POST['sites'])) {
     $errors['nomsit'] = "Veuillez insérer un nom de site valide! ";
 } else {
-    $nomsit = htmlspecialchars($_POST['nomsit']);
+    $nomsit = htmlspecialchars($_POST['sites']);
     if (!preg_match('/^[\p{L}0-9\s.,\'’\-!?"()]+$/u', $nomsit)) {
         $errors['nomsit'] = "Veuillez insérer un nom de site touristique valide! ";
     }
 }
 
 // On vérifie le lien de la photo
-if (empty($_POST['photo'])) {
-    $errors['photo'] = "Veuillez insérer une photo! ";
-} else {
-    $photo = htmlspecialchars($_FILES['photo']);
-}
+// if (empty($_POST['photo'])) {
+//     $errors['photo'] = "Veuillez insérer une photo! ";
+// } else {
+//     $photo = htmlspecialchars($_FILES['photo']);
+// }
 
     
 
@@ -325,7 +325,7 @@ $sql6 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'aeroport', '$va
 
 
 // Insérer le site avec sa photo (à partir de l'input)
-
+$sql7='';
 if (isset($_POST['sites'])) {
     $sites = $_POST['sites'];
     // Boucle sur les sites et leurs images
@@ -407,7 +407,6 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
         }
       ?>
                         </select>
-                        <button type="button" class="btnplus" id="nouveauPaysBtn"><span>+</span></button>
                     </div>
 
                     <br>
@@ -415,11 +414,6 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
 
                 </div>
-
-
-
-
-
 
 
 
@@ -637,7 +631,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                     <!-- Formulaire pour ajouter un site -->
                     <div class="aligner">
                         <div class="site-img">
-                            <input type="text" id="nomsit" name="nomsit"
+                            <input type="text" id="nomsit" name="sites"
                                 value="<?php echo htmlspecialchars($nomsit); ?>">
                             <div class="red-text"><?php echo $errors['nomsit']; ?></div>
 
@@ -648,7 +642,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
                         <button type="button" class="btn-ajouter" id="addsite" onclick="ajouterSite()">Ajouter</button>
                         <div>
-                            <select id="sites_list" name="sites[]" multiple>
+                            <select id="sites_list" name="nomsi" multiple>
                                 <?php
         if (isset($_GET["nomvilmod"])) {
             foreach ($updateSite as $value) {

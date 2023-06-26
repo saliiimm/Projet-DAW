@@ -11,13 +11,12 @@ if (isset($_POST['submit'])) {
     $pays = $_POST['pays'];
     $ville = $_POST['ville'];
     $site = $_POST['site'];
-
     // Construire la requête SQL de recherche en fonction des champs remplis
 $sql = "SELECT ville.idvil, ville.nomvil, pays.nompay FROM ville
         INNER JOIN pays ON ville.idpay = pays.idpay";
 
 
-    // Ajouter les conditions de recherche en fonction des champs remplis
+      // Ajouter les conditions de recherche en fonction des champs remplis
     if (!empty($continent)) {
         $sql .= " INNER JOIN continent ON pays.idcon = continent.idcon
                   WHERE continent.nomcon like '%$continent%'";
@@ -36,8 +35,10 @@ $sql = "SELECT ville.idvil, ville.nomvil, pays.nompay FROM ville
        $sql .= " INNER JOIN site ON ville.idvil = site.idvil
               WHERE site.nomsit LIKE '%$site%'";
     }
+if (empty($pays) && empty($continent) && empty($ville) && empty($site)) {
 
-    // Exécuter la requête SQL
+}else{
+      // Exécuter la requête SQL
     $result = mysqli_query($conn, $sql);
 
  // Vérifier si la requête a renvoyé des résultats
@@ -53,6 +54,10 @@ $sql = "SELECT ville.idvil, ville.nomvil, pays.nompay FROM ville
 
     // Libérer la mémoire du résultat
     mysqli_free_result($result);
+}
+  
+
+  
 }
 
 
@@ -178,7 +183,9 @@ mysqli_close($conn);
                             <h5><?php echo htmlspecialchars($ville['nompay']); ?></h5>
                         </div>
                         <div class="icones">
-                            <img src="./assets/btn-modifier.png" alt="modifier-btn">
+                            <a href="modify.php?id=<?php echo $ville['idvil']  ?> ">
+                                <img src="./assets/btn-modifier.png" alt="modifier-btn"></a>
+
                             <form method="POST" class="delete-form">
                                 <input type="hidden" name="delete" value="<?php echo $ville['idvil']; ?>">
                                 <button type="submit" class="delete-btn"><img src="./assets/supprimer-btn.png"
