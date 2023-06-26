@@ -8,12 +8,12 @@ include('config/bd_connect.php');
 
 
 //on initialise nos vars dabs lesquels on recupere les données de l'utilisateur:
-$ville = $description = $continent = $pays = $hotel = $gare = $aeroport = $resto = $nomsit = $photo = '';
+$ville = $description = $continent = $pays = $hotel = $gare = $aeroport = $resto = $nomsit = $photo = $sites = '';
 
 
 
 //on fait un tableau dans lequel on stocke les erreurs si existantes:
-$errors = array('ville' => '','description' => '','continent' => '','pays' => '','hotel' => '','gare' => '','resto' => '','aeroport' => '','nomsit' => '','photo' => '');
+$errors = array('ville' => '','description' => '','continent' => '','pays' => '','hotel' => '','gare' => '','resto' => '','aeroport' => '','nomsit' => '','photo' => '','sites' => '');
 
 
 
@@ -222,8 +222,7 @@ $gare = mysqli_real_escape_string($conn,$_POST['garename']);
 $hotel = mysqli_real_escape_string($conn,$_POST['hotelname']);
 $resto = mysqli_real_escape_string($conn,$_POST['restoname']);
 $aeroport = mysqli_real_escape_string($conn,$_POST['aeroportname']);
-$nomsit = mysqli_real_escape_string($conn,$_POST['nomsit']);
-$photo = mysqli_real_escape_string($conn,$_FILES['photo']);
+$sites=mysqli_real_escape_string($conn,$_POST['sites']);
 
 
 
@@ -326,18 +325,20 @@ $sql6 = "INSERT INTO necessaire (typenec, nomnec, idvil) SELECT 'aeroport', '$va
 
 
 // Insérer le site avec sa photo (à partir de l'input)
-if (!empty($nomsit) && !empty($photo)) {
-   foreach ($_POST['nomsit'] as $value) {
-    foreach($FILES['photo'] as $value2){
-          $value = ucwords($value);
-          $value2 = ucwords($value2);
-    $sql7 = "INSERT INTO site (nomsit, cheminphoto, idvil) SELECT '$value', '$value2', '$idvil';";
-    mysqli_query($conn, $sql7);
-    }
-  
-  }
-}
 
+if (isset($_POST['sites'])) {
+    $sites = $_POST['sites'];
+    // Boucle sur les sites et leurs images
+    foreach ($sites as $site) {
+        $nomsit = mysqli_real_escape_string($conn, $site);
+        $photo = mysqli_real_escape_string($conn, $_POST['photo']);
+
+        // Requête d'insertion dans la table "site"
+        $sql7 = "INSERT INTO site (nomsit, cheminphoto) VALUES ('$nomsit', '$photo')";
+  mysqli_query($conn, $sql7);
+     
+    }
+}
 
 
 
@@ -645,13 +646,12 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
                             <div class="red-text"><?php echo $errors['photo']; ?></div>
                         </div>
 
-                        <button type="button" class="btn-ajouter" id="addResto"
-                            onclick="ajouter(event,'restaurants_list','restaurant')">Ajouter</button>
+                        <button type="button" class="btn-ajouter" id="addsite" onclick="ajouterSite()">Ajouter</button>
                         <div>
-                            <select id="restaurants_list" name="restaurants[]" multiple>
+                            <select id="sites_list" name="sites[]" multiple>
                                 <?php
         if (isset($_GET["nomvilmod"])) {
-            foreach ($updateRestaurant as $value) {
+            foreach ($updateSite as $value) {
                 echo "<option>" . $value . "</option>";
             }
         }

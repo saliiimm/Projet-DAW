@@ -80,6 +80,39 @@ function ajouter(event, parent, child) {
   list.appendChild(p);
   //list.insertBefore(p,list.firstElementChild);
 }
+// Fonction pour ajouter un site à la liste
+function ajouterSite() {
+  var nomsit = document.getElementById("nomsit").value;
+  var photoInput = document.getElementById("photo");
+
+  if (nomsit !== "" && photoInput.files.length > 0) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      var imageDataUrl = e.target.result;
+
+      var site = {
+        nomsit: nomsit,
+        photo: imageDataUrl,
+      };
+
+      ajouterElementListe(site, "sites_list");
+    };
+
+    reader.readAsDataURL(photoInput.files[0]);
+  }
+}
+
+// Fonction pour ajouter un élément à la liste
+function ajouterElementListe(element, listeId) {
+  var select = document.getElementById(listeId);
+
+  var option = document.createElement("option");
+  option.text = element.nomsit;
+  option.value = element.photo;
+
+  select.add(option);
+}
 
 //diaporama ville.php:
 document.addEventListener("DOMContentLoaded", function () {
