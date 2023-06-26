@@ -26,6 +26,6 @@
                     class="mail">ramzybelaiboud@gmail.com</a> </h3>
         </div>
         </h3>
-        <hr>
+        <hr class="hr2">
         <a href="../projet-daw/ajout.php" class="btn-ville">Ajouter une Ville</a>
 </nav>

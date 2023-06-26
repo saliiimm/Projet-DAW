@@ -121,7 +121,7 @@ var currentURL = window.location.href;
 
 if (currentURL.includes("ajout.php")) {
   btnHeader.href = "../projet-daw/home.php";
-  btnHeader.textContent = "Acceuil";
+  btnHeader.textContent = "Accueil";
 } else {
   btnHeader.href = "../projet-daw/ajout.php";
   btnHeader.textContent = "Ajouter une Ville";

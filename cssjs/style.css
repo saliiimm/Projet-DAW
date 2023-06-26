@@ -40,6 +40,7 @@ header {
   height: 310px;
   width: calc(100vw - 250px);
   background-image: url(../assets/paysage-monatgne.jpg);
+  background-position: 0 -60px;
   background-size: cover; /* Redimensionner l'image pour couvrir tout l'élément */
   color: #fff;
   display: flex;
@@ -78,7 +79,7 @@ nav h2 {
 /*style barres*/
 nav hr {
   width: 79%;
-  margin-bottom: 35px;
+  margin-bottom: 17px;
 }
 /*style boutons 1 et 2*/
 .boutons {
@@ -101,7 +102,7 @@ nav hr {
   filter: brightness(1.75);
 }
 .btn2 {
-  filter: brightness(0.75);
+  filter: brightness(0.65);
 }
 .etudiant-infos {
   margin-bottom: 30px;
@@ -144,6 +145,10 @@ nav hr {
   font-size: larger;
   font-weight: bold;
   text-decoration: none;
+  margin-left: 15px;
+}
+.hr2 {
+  width: 200px !important;
 }
 /*partie home recherche*/
 .partie-home,
@@ -164,12 +169,12 @@ nav hr {
   flex-direction: column;
 }
 .recherche-bloc {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.65);
   border-radius: 15px;
   border: solid 1px grey;
   width: 950px;
   position: absolute;
-  top: -65px;
+  top: -85px;
   height: 300px;
 }
 .partie-home h2 {
@@ -422,12 +427,27 @@ select {
 .ajout-groupe div {
   margin-right: 55px;
 }
+.ajout-groupe.premier {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+.ajout-groupe.premier div {
+  margin-right: 0;
+}
 .ajout-ville input,
 .ajout-ville select {
   width: 185px;
   height: 27px !important;
   border: 2px solid #181f54;
   border-radius: 11px;
+}
+.ajout-ville select {
+  height: 32px !important;
+}
+.ajout-ville select ::placeholder {
+  margin-right: 3px;
 }
 input[name="description"] {
   width: 350px !important;
@@ -485,12 +505,16 @@ input[name="description"] {
 }
 .aligner {
   display: flex !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   justify-content: center !important;
   flex-direction: row !important;
 }
 .aligner > * {
-  margin-right: 55px;
+  margin-right: 35px;
+}
+#pays,
+#continent {
+  margin-right: 0;
 }
 .ajout-groupe {
   justify-content: left;
@@ -505,6 +529,32 @@ input[name="description"] {
   min-height: 150px;
   max-height: max-content;
 }
+.titres-ajout-listes {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-direction: row !important;
+  width: 79%;
+}
+.titres-ajout-listes.long {
+  width: 83%;
+}
+.site-img {
+  height: 110px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.site-img > * {
+  margin-bottom: 10px;
+}
+input[type="file"]::file-selector-button {
+  display: none;
+}
+input[type="file"] {
+  text-align: center;
+}
+
 /*modal ajout-pays:*/
 #modalSection {
   display: none;
@@ -539,14 +589,13 @@ input[name="description"] {
 #modalSection select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #181f54;
   border-radius: 4px;
   box-sizing: border-box;
   margin-bottom: 10px;
 }
 
 #modalSection .red-text {
-  color: red;
   margin-bottom: 10px;
 }
 
@@ -560,12 +609,13 @@ input[name="description"] {
   justify-content: space-around;
 }
 .btn-ajouter.close {
-  background-color: red;
+  color: #181f54;
+  background-color: white;
+  border: 1px solid #181f54;
 }
 /* footer */
 footer {
   position: absolute;
-
   left: 250px;
   background-color: #181f54;
   width: calc(100vw - 250px);

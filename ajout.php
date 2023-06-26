@@ -381,9 +381,9 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
         </div>
 
         <form method="POST" action="ajout.php" enctype="multipart/form-data">
-            <div class="ajout-groupe">
+            <div class="ajout-groupe premier">
                 <div>
-                    <label for="ville">Ville :</label>
+                    <label for="ville">Ville </label>
                     <input type="text" name="ville" value="<?php echo htmlspecialchars($ville) ?>" required>
                     <!---afficher valeur insérée avant si elle existe--->
                     <br>
@@ -393,7 +393,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
 
                 <div>
-                    <label for="continent">Continent :</label>
+                    <label for="continent">Continent </label>
                     <div class="aligner">
                         <select id="continent" name="continent" class="champpayscontient" required>
                             <option value="<?php echo htmlspecialchars($continent) ?>">Sélectionnez un continent
@@ -406,6 +406,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
         }
       ?>
                         </select>
+                        <button type="button" class="btnplus" id="nouveauPaysBtn"><span>+</span></button>
                     </div>
 
                     <br>
@@ -422,7 +423,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
 
                 <div>
-                    <label for="pays">Pays :</label>
+                    <label for="pays">Pays </label>
                     <div class="aligner">
                         <select id="pays" name="pays" value="<?php echo htmlspecialchars($pays) ?>"
                             class="champpayscontient" required>
@@ -465,7 +466,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
             <div class="ajout-groupe ">
                 <div>
-                    <label for="description">Description :</label>
+                    <label for="description">Description </label>
                     <input type="text" name="description" value="<?php echo htmlspecialchars($description) ?>" required>
                     <!---afficher valeur insérée avant si elle existe--->
                     <br>
@@ -491,14 +492,16 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
             <div class="ajout-groupe">
                 <div>
-                    <h2>Hôtels :</h2>
+                    <div class="titres-ajout-listes">
+                        <h2>Hôtels </h2>
+                        <h2>Liste hotels</h2>
+                    </div>
                     <div class="aligner">
                         <input type="text" id="hotel" name="hotelname" placeholder="Nom de l'hôtel"
                             value="<?php echo htmlspecialchars($hotel) ?>">
                         <button type="button" class="btn-ajouter" id="addHotel"
                             onclick="ajouter(event,'hotel_list','hotel')">Ajouter</button>
                         <div>
-                            <h6>Hotels:</h6>
                             <select id="hotel_list" name="hotel[]" multiple>
                                 <?php
                                   if (isset($_GET["nomvilmod"])) {
@@ -522,14 +525,16 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
             <div class="ajout-groupe">
                 <div>
-                    <h2>Gares :</h2>
+                    <div class="titres-ajout-listes">
+                        <h2>Gares </h2>
+                        <h2>Liste gares</h2>
+                    </div>
                     <div class="aligner">
                         <input type="text" id="gare" name="garename" placeholder="Nom de la gare"
                             value="<?php echo htmlspecialchars($gare) ?>">
                         <button type="button" class="btn-ajouter" id="addGare"
                             onclick="ajouter(event,'gares_list','gare')">Ajouter</button>
                         <div>
-                            <h6>Gares:</h6>
                             <select id="gares_list" name="gares[]" multiple>
                                 <?php
         if (isset($_GET["nomvilmod"])) {
@@ -554,14 +559,16 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
             <div class="ajout-groupe">
                 <div>
-                    <h2>Aéroports :</h2>
+                    <div class="titres-ajout-listes long">
+                        <h2>Aeroports </h2>
+                        <h2>Liste aeroports</h2>
+                    </div>
                     <div class="aligner">
                         <input type="text" id="aeroport" name="aeroportname" placeholder="Nom de l'aéroport"
                             value="<?php echo htmlspecialchars($aeroport) ?>">
                         <button type="button" class="btn-ajouter" id="addAeroport"
                             onclick="ajouter(event,'aeroports_list','aeroport')">Ajouter</button>
                         <div>
-                            <h6>Aeroports:</h6>
                             <select id="aeroports_list" name="aeroports[]" multiple>
                                 <?php
         if (isset($_GET["nomvilmod"])) {
@@ -590,14 +597,16 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
 
             <div class="ajout-groupe">
                 <div>
-                    <h2>Restaurants :</h2>
+                    <div class="titres-ajout-listes  long">
+                        <h2>Restaurants </h2>
+                        <h2>Liste restaurants</h2>
+                    </div>
                     <div class="aligner">
                         <input type="text" id="restaurant" name="restoname" placeholder="Nom de l'aéroport"
                             value="<?php echo htmlspecialchars($resto) ?>">
                         <button type="button" class="btn-ajouter" id="addResto"
                             onclick="ajouter(event,'restaurants_list','restaurant')">Ajouter</button>
                         <div>
-                            <h6>Restaurants:</h6>
                             <select id="restaurants_list" name="restaurants[]" multiple>
                                 <?php
         if (isset($_GET["nomvilmod"])) {
@@ -617,28 +626,56 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
             </div>
 
 
+            <div class="ajout-groupe">
 
-            <!-- Formulaire pour ajouter un site -->
-            <label for="nomsit">Nom du site :</label>
-            <input type="text" id="nomsit" name="nomsit" value="<?php echo htmlspecialchars($nomsit); ?>">
-            <div class="red-text"><?php echo $errors['nomsit']; ?></div>
+                <div>
+                    <div class="titres-ajout-listes">
+                        <h2>Sites </h2>
+                        <h2>Liste Sites</h2>
+                    </div>
+                    <!-- Formulaire pour ajouter un site -->
+                    <div class="aligner">
+                        <div class="site-img">
+                            <input type="text" id="nomsit" name="nomsit"
+                                value="<?php echo htmlspecialchars($nomsit); ?>">
+                            <div class="red-text"><?php echo $errors['nomsit']; ?></div>
 
-            <label for="photo">Lien de la photo :</label>
-            <input type="file" accept="image/*" id="photo" name="photo" value="<?php echo htmlspecialchars($photo); ?>">
-            <div class="red-text"><?php echo $errors['photo']; ?></div>
+                            <input type="file" accept="image/*" id="photo" name="photo"
+                                value="<?php echo htmlspecialchars($photo); ?>">
+                            <div class="red-text"><?php echo $errors['photo']; ?></div>
+                        </div>
+
+                        <button type="button" class="btn-ajouter" id="addResto"
+                            onclick="ajouter(event,'restaurants_list','restaurant')">Ajouter</button>
+                        <div>
+                            <select id="restaurants_list" name="restaurants[]" multiple>
+                                <?php
+        if (isset($_GET["nomvilmod"])) {
+            foreach ($updateRestaurant as $value) {
+                echo "<option>" . $value . "</option>";
+            }
+        }
+        ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
 
+            </div>
 
-            <button type="submit" value="submit" name=submit>Ajouter</button>
+
+            <button type="submit" value="submit" name=submit>Envoyer</button>
 
         </form>
     </section>
     <section id="modalSection">
 
         <form action="ajout.php" method="post">
-            <h4 class="center">Ajouter un pays</h4>
+            <h4 class="center">Ajout d'un pays</h4>
+            <hr style="width:55%;background-color:#181f54;">
             <div>
-                <label for="continent">Continent :</label>
+                <label for="continent">Continent </label>
                 <select id="continent" name="nomcontinent" required>
                     <option value="<?php echo htmlspecialchars($nomcontinent) ?>">Sélectionnez un continent
                     </option>
@@ -659,7 +696,7 @@ if(mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($con
             <input type="text" name="nompays" value="<?php echo htmlspecialchars($nompays) ?>">
             <div class="red-text"><?php echo $errorss['nompays'] ?></div>
             <div class="center btns">
-                <input type="submit" value="Submit" name="submitpays" class="btn-ajouter">
+                <input type="submit" value="Confirmer" name="submitpays" class="btn-ajouter">
 
                 <button id="closeModalButton" class="btn-ajouter close">fermer</button>
             </div>
